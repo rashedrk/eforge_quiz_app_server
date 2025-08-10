@@ -4,8 +4,8 @@ import { QUESTION_LEVEL } from "../Question/question.constant";
 const createCertificateValidationSchema = z.object({
     body: z.object({
         userId: z.string({
-            invalid_type_error: "userId must be a string",
-            required_error: "userId is required",
+            invalid_type_error: "User ID must be a string",
+            required_error: "User ID is required",
         }),
         levelAchieved: z.enum(
             Object.values(QUESTION_LEVEL) as [string, ...string[]],

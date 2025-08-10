@@ -49,11 +49,14 @@ const upsertLatestCertificateIntoDB = async (payload: TCertificate) => {
 };
 
 const getCertificateByUserFromDB = async (userId: string) => {
-    const cert = await Certificate.findOne({ userId }).lean();
-    if (!cert) {
+    const doc = await Certificate.findOne({ userId })
+        .populate('userId', 'name email')
+        .lean();
+    if (!doc) {
         throw new AppError(httpStatus.NOT_FOUND, "Certificate not found for user");
     }
-    return cert;
+    const { userId: user, ...rest } = doc;
+    return { ...rest, user };
 };
 
 export const CertificateServices = {
